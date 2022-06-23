@@ -1,0 +1,3 @@
+[submodule ".\\MazeGeneration\\Assets\\UnityFoundation"]
+	path = .\\MazeGeneration\\Assets\\UnityFoundation
+	url = https://github.com/BrunoBiluca/UnityFoundation.git
