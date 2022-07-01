@@ -3,12 +3,12 @@ using UnityFoundation.Code.Grid;
 
 namespace GameAssets.BasicMazeGenerator.Tests
 {
-    public class RandomCrawlerTests
+    public class RandomCrawlerOnDepthTests
     {
         [Test]
-        public void ShouldCreatePathVerticallyInGrid()
+        public void ShouldCreatePathOnDepthInGrid()
         {
-            var grid = new GridXZ<bool>(2, 2, 1);
+            var maze = new Maze(2, 2, 1);
 
             var randomGenerator = new RandomCrawlerDummyValueBuilder()
                 .StartX(0)
@@ -16,21 +16,21 @@ namespace GameAssets.BasicMazeGenerator.Tests
                 .CrawFowardZ()
                 .Build();
 
-            var crawler = new RandomCrawler(randomGenerator);
+            var crawler = new RandomCrawlerOnDepth(randomGenerator);
 
-            crawler.SetBorderPadding(0).Craw(grid, true);
+            crawler.SetBorderPadding(0).Craw(maze, true);
 
-            Assert.IsFalse(grid.GetValue(1, 0));
-            Assert.IsFalse(grid.GetValue(1, 1));
+            Assert.IsFalse(maze.GetValue(1, 0));
+            Assert.IsFalse(maze.GetValue(1, 1));
 
-            Assert.IsTrue(grid.GetValue(0, 0));
-            Assert.IsTrue(grid.GetValue(0, 1));
+            Assert.IsTrue(maze.GetValue(0, 0));
+            Assert.IsTrue(maze.GetValue(0, 1));
         }
 
         [Test]
         public void ShouldCrawOverAllWhenAxisAreChangingGrid()
         {
-            var grid = new GridXZ<bool>(2, 2, 1);
+            var grid = new Maze(2, 2, 1);
 
             var randomGenerator = new RandomCrawlerDummyValueBuilder()
                 .StartX(0)
@@ -40,7 +40,7 @@ namespace GameAssets.BasicMazeGenerator.Tests
                 .CrawFowardZ()
                 .Build();
 
-            var crawler = new RandomCrawler(randomGenerator);
+            var crawler = new RandomCrawlerOnDepth(randomGenerator);
 
             crawler.SetBorderPadding(0).Craw(grid, true);
 

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityFoundation.Code;
 using UnityFoundation.Code.Grid;
 
 namespace GameAssets.BasicMazeGenerator
@@ -10,9 +9,9 @@ namespace GameAssets.BasicMazeGenerator
 
         public void Render(IGridXZ<bool> grid)
         {
-            foreach(var pos in grid.GridArray)
+            foreach(var pos in grid.GridMatrix)
             {
-                if(pos.Value) continue;
+                if(!pos.Value) continue;
 
                 var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 go.name = OBJECT_NAME;

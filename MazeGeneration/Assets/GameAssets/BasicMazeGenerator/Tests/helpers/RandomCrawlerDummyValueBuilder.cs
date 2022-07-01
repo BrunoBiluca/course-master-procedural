@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityFoundation.Code;
 
 namespace GameAssets.BasicMazeGenerator.Tests
 {
@@ -12,6 +13,12 @@ namespace GameAssets.BasicMazeGenerator.Tests
         }
 
         public RandomCrawlerDummyValueBuilder StartX(int value)
+        {
+            dummyValues.Add(value);
+            return this;
+        }
+
+        public RandomCrawlerDummyValueBuilder StartZ(int value)
         {
             dummyValues.Add(value);
             return this;

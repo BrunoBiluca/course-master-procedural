@@ -4,6 +4,6 @@ namespace GameAssets.BasicMazeGenerator
 {
     public interface IGridCrawler
     {
-        void Craw(IGridXZ<bool> grid, bool value = false);
+        void Craw(Maze maze, bool value = false);
     }
 }

@@ -9,7 +9,7 @@ namespace GameAssets.BasicMazeGenerator.Tests
 
         public void Render(IGridXZ<bool> grid)
         {
-            foreach(var pos in grid.GridArray)
+            foreach(var pos in grid.GridMatrix)
             {
                 if(pos.Value)
                     rendererPositions++;

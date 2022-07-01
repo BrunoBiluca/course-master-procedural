@@ -2,7 +2,8 @@
     "name": "BasicMazeGenerator",
     "rootNamespace": "",
     "references": [
-        "GUID:d7d703d7ba19f3c45b01309621aede27"
+        "GUID:d7d703d7ba19f3c45b01309621aede27",
+        "GUID:28e6dcdf5652e40408681db36ed95675"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

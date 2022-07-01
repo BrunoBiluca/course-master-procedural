@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityFoundation.Code.Grid;
@@ -8,24 +9,20 @@ namespace GameAssets.BasicMazeGenerator.Tests
     public class BasicMazeGeneratorTests
     {
         [Test]
-        public void ShouldInitializeWithFilledMaze()
+        public void ShouldNotReturnMazeWhenGeneratorDidNotRun()
         {
-            var gridXZ = new GridXZ<bool>(2, 2, 1);
-            var maze = new BasicMazeGenerator(gridXZ);
+            var generator = new BasicMazeGenerator(2, 2);
 
-            Assert.AreEqual(true, maze.GetValue(0, 0));
-            Assert.AreEqual(true, maze.GetValue(0, 1));
-            Assert.AreEqual(true, maze.GetValue(1, 0));
-            Assert.AreEqual(true, maze.GetValue(1, 1));
+            Assert.IsFalse(generator.WasMazeGenerated);
+            Assert.Throws<InvalidOperationException>(() => generator.GetMaze());
         }
 
         [Test]
         public void ShouldCreateCenterCorridor()
         {
-            var gridXZ = new GridXZ<bool>(3, 3, 1);
-            var maze = new BasicMazeGenerator(gridXZ);
-
-            maze.Generate(new StraightCrawler(1));
+            var maze = new BasicMazeGenerator(3, 3)
+                .AddCrawler(new StraightCrawler(1))
+                .Generate();
 
             Assert.AreEqual(true, maze.GetValue(0, 0));
             Assert.AreEqual(false, maze.GetValue(0, 1));
@@ -43,31 +40,30 @@ namespace GameAssets.BasicMazeGenerator.Tests
         [Test]
         public void ShouldRenderAllFilledPositions()
         {
-            var gridXZ = new GridXZ<bool>(2, 2, 1);
-            var maze = new BasicMazeGenerator(gridXZ);
-
-            maze.Generate(new StraightCrawler(1));
+            var maze = new BasicMazeGenerator(3, 3)
+                .AddCrawler(new StraightCrawler(1))
+                .Generate();
 
             var gridRenderer = new DummyGridRenderer();
-            maze.Render(gridRenderer);
+            gridRenderer.Render(maze);
 
-            Assert.AreEqual(2, gridRenderer.RenderedPositions);
+            Assert.AreEqual(6, gridRenderer.RenderedPositions);
         }
 
         [Test]
         public void ShouldCreateCubesForAllFilledPositions()
         {
-            var gridXZ = new GridXZ<bool>(2, 2, 1);
-            var maze = new BasicMazeGenerator(gridXZ);
+            var gridXZ = new GridXZ<bool>(3, 3, 1);
+            var maze = new BasicMazeGenerator(3, 3)
+                .AddCrawler(new StraightCrawler(1))
+                .Generate();
 
-            maze.Generate(new StraightCrawler(1));
+            new CubeGridRenderer().Render(maze);
 
-            maze.Render(new CubeGridRenderer());
-
-            var renderedObjects = Object.FindObjectsOfType<GameObject>()
+            var renderedObjects = UnityEngine.Object.FindObjectsOfType<GameObject>()
                 .Where(go => go.name == CubeGridRenderer.OBJECT_NAME);
 
-            Assert.AreEqual(2, renderedObjects.Count());
+            Assert.AreEqual(6, renderedObjects.Count());
         }
     }
 }

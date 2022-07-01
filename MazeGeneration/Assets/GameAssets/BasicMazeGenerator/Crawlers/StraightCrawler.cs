@@ -11,9 +11,9 @@ namespace GameAssets.BasicMazeGenerator
             this.line = line;
         }
 
-        public void Craw(IGridXZ<bool> grid, bool value = false)
+        public void Craw(Maze maze, bool value = false)
         {
-            foreach(var gridPos in grid.GridArray)
+            foreach(var gridPos in maze.GridMatrix)
             {
                 if(gridPos.Z == line)
                     gridPos.Value = value;

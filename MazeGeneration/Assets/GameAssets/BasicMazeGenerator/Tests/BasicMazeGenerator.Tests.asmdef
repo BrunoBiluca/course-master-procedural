@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "BasicMazeGenerator",
-        "UnityFoundation.Code"
+        "UnityFoundation.Code",
+        "UnityFoundation.SavingSystem"
     ],
     "includePlatforms": [
         "Editor"

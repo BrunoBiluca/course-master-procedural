@@ -1,31 +1,32 @@
+using UnityFoundation.Code;
 using UnityFoundation.Code.Grid;
 
 namespace GameAssets.BasicMazeGenerator
 {
-    public class RandomCrawler : IGridCrawler
+    public class RandomCrawlerOnDepth : IGridCrawler
     {
         private readonly IRandomGenerator random;
         private int padding;
 
-        public RandomCrawler(IRandomGenerator random)
+        public RandomCrawlerOnDepth(IRandomGenerator random)
         {
             this.random = random;
         }
 
-        public RandomCrawler SetBorderPadding(int value)
+        public RandomCrawlerOnDepth SetBorderPadding(int value)
         {
             padding = value;
             return this;
         }
 
-        public void Craw(IGridXZ<bool> grid, bool value = false)
+        public void Craw(Maze maze, bool value = false)
         {
-            var x = random.Range(padding, grid.Width - 1);
+            var x = random.Range(padding, maze.Width - 1);
             var z = padding;
 
-            while(!IsGridBorder(grid, x, z))
+            while(!IsGridBorder(maze, x, z))
             {
-                grid.TrySetValue(x, z, value);
+                maze.TrySetValue(x, z, value);
                 if(random.Range(0, 100) < 50)
                     x += random.Range(-1, 2);
                 else
